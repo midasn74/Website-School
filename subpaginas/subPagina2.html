@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+	<title>Wachtwoord</title>
+	<meta charset="UTF-8">
+	<link rel="icon" type="image/x-icon" href="/~midas.n/fotos/standaardIcon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../style/style.css">
+	<script src="../script/script.js"></script>
+</head>
+
+<body>
+	<h1>Wachtwoord</h1>
+
+	<h2>Wachtwoord generator</h2>
+	<ul class="form">
+		<li>
+			<label>Aantal tekens: <span id="aantalTekens"></span></label>
+			<input type="range" min="1" max="16" value="8" id="aantalTekensSlider">
+		</li>
+		<li>
+			<label>Soort tekens:</label>
+		</li>
+		<li>
+			<input type="checkbox" id="kleineLettersCheck" name="kleineLetters" value="kleineLetters" style="display: inline;" checked>
+			<label for="kleineLetter" style="display: inline;">Kleine letter (a-z)</label><br>
+		</li>
+		<li>
+			<input type="checkbox" id="groteLettersCheck" name="groteLetters" value="groteLetters" style="display: inline;" checked>
+			<label for="groteLetter" style="display: inline;">Grote letter (A-Z)</label><br>
+		</li>
+		<li>
+			<input type="checkbox" id="cijfersCheck" name="cijfers" value="cijfers" style="display: inline;" checked>
+			<label for="cijfers" style="display: inline;">Cijfers (0-9)</label><br>
+		</li>
+		<li>
+			<input type="checkbox" id="symbolenCheck" name="symbolen" value="symbolen" style="display: inline;" checked>
+			<label for="symbolen" style="display: inline;">Symbolen (! @ # $ % ^ & *)</label><br>
+		</li>
+		<li>
+			<button onclick="maakWachtwoord('qwertyuiopasdfghjklzxcvbnm')">Geneneer</button>
+			<label onclick="kopieerWachtwoord()">Wachtwoord: <input type="text" id="wachtwoord" value="" readonly></input></label>
+		</li>
+	</ul>
+
+	<hr>
+
+	<footer>
+        <div>
+            <p>not copyright © 2020 Midas Nies</p>
+        </div>
+    </footer>
+</body>
+
+<script>
+	var slider = document.getElementById("aantalTekensSlider");
+	var aantalTekens = document.getElementById("aantalTekens");
+	var wachtwoordOut = document.getElementById("wachtwoord");
+	aantalTekens.innerHTML = slider.value;
+
+	aantalTekensSlider.oninput = function() {
+		aantalTekens.innerHTML = this.value;
+	}
+
+	function kopieerWachtwoord() {
+		var copyText = document.getElementById("wachtwoord");
+		copyText.select();
+		copyText.setSelectionRange(0, 16)
+		document.execCommand("copy");
+		alert('Wachtwoord gekopieerd');
+	}
+	
+	function maakWachtwoord() {
+		var tekens = ''
+		if (document.getElementById("kleineLettersCheck").checked == true) {
+			var kleineLetters = 'qwertyuiopasdfghjklzxcvbnm';
+			tekens = tekens.concat(kleineLetters);
+		}
+		if (document.getElementById("groteLettersCheck").checked == true) {
+			var groteLetters = 'QWERTYUIOPASDFGHJKLZXCVBNM';
+			tekens = tekens.concat(groteLetters);
+		}
+		if (document.getElementById("cijfersCheck").checked == true) {
+			var cijfers = '1234567890';
+			tekens = tekens.concat(cijfers);
+		}
+		if (document.getElementById("symbolenCheck").checked == true) {
+			var symbolen = '!@#$%^&*';
+			tekens = tekens.concat(symbolen);
+		}
+		var wachtwoord = '';
+		var tekensLengte = tekens.length;
+		for ( var i = 0; i < slider.value; i++ ) {
+			wachtwoord += tekens.charAt(Math.floor(Math.random() * tekensLengte));
+		}
+		wachtwoordOut.value = wachtwoord;
+	}
+</script>
+
+</html>
