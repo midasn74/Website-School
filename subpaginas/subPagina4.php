@@ -1,48 +1,56 @@
 <?php 
 	if (isset($_POST['verstuur'])) {
-		$ontvanger = "PV143938@leerling.pvanhorne.nl";
+		$cookie_name = "formulierIngevuld";
+		if(!isset($_COOKIE[$cookie_name])) {
+			$ontvanger = "PV143938@leerling.pvanhorne.nl";
 
-		$voorNaam = $_POST['voorNaam'];
+			$voorNaam = $_POST['voorNaam'];
+	
+			$achterNaam = $_POST['achterNaam'];
+	
+			$geslacht = $_POST['geslacht'];
+	
+			$onderwerp = "Reactie formulier informatica site";
+	
+			$headers  = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+	
+			$email = $_POST['email'];
 
-		$achterNaam = $_POST['achterNaam'];
+			$bericht = wordwrap($_POST['bericht'],70);
 
-		$geslacht = $_POST['geslacht'];
+			$message = '<html>';
+			$message .= '<head>';
+			$message .= '<style>';
+			$message .= 'hr {';
+			$message .= 'border: 3px solid #05386B;';
+			$message .= 'border-radius: 2px;';
+			$message .= 'margin: 5px 0px;';
+			$message .= 'background-color: #05386B;';
+			$message .= '}';
+			$message .= '</style>';
+			$message .= '</head>';
+			$message .= '<body>';
+			$message .= '<h1>Reactie informatica site</h1>';
+			$message .= '<hr>';
+			$message .= '<p><b>Naam: </b>' . $voorNaam . ' ' . $achterNaam . '</p>';
+			$message .= '<p><b>Geslacht: </b>' . $geslacht . '</p>';
+			$message .= "<p><b>Email: </b> <a href='mailto:" . $email . "'>" . $email . "</a></p>";
+			$message .= '<hr>';
+			$message .= '<p><b>Bericht:</b></p>';
+			$message .= '<p>' . $bericht . '</p>';
+			$message .= '</body>';
+			$message .= '</html>';
+	
+			mail($ontvanger,$onderwerp,$message,$headers);
 
-		$onderwerp = "Reactie formulier informatica site";
-
-		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-
-		$email = $_POST['email'];
-
-		$bericht = wordwrap($_POST['bericht'],70);
-
-		$message = '<html>';
-		$message .= '<head>';
-		$message .= '<style>';
-		$message .= 'hr {';
-		$message .= 'border: 3px solid #05386B;';
-		$message .= 'border-radius: 2px;';
-		$message .= 'margin: 5px 0px;';
-		$message .= 'background-color: #05386B;';
-		$message .= '}';
-		$message .= '</style>';
-		$message .= '</head>';
-		$message .= '<body>';
-		$message .= '<h1>Reactie informatica site</h1>';
-		$message .= '<hr>';
-		$message .= '<p><b>Naam: </b>' . $voorNaam . ' ' . $achterNaam . '</p>';
-		$message .= '<p><b>Geslacht: </b>' . $geslacht . '</p>';
-		$message .= "<p><b>Email: </b> <a href='mailto:" . $email . "'>" . $email . "</a></p>";
-		$message .= '<hr>';
-		$message .= '<p><b>Bericht:</b></p>';
-		$message .= '<p>' . $bericht . '</p>';
-		$message .= '</body>';
-		$message .= '</html>';
-
-		mail($ontvanger,$onderwerp,$message,$headers);
-
-		echo '<script>alert("Verzonden!")</script>';
+			$cookie_value = "1";
+			setcookie($cookie_name, $cookie_value, time() + (43200 * 30), "/");
+	
+			echo '<script>alert("Verzonden!")</script>';
+		} else {
+			echo '<script>alert("U kunt het formulier maar een keer per twaalf uur inleveren.")</script>';
+		}
 	}
 ?>
 
@@ -67,12 +75,12 @@
 		<ul class="form">
 			<li>
 				<label>Naam</label>
-				<input type="text" name="voorNaam" class="field-long" placeholder="Voor" required> 
-				<input type="text" name="achterNaam" class="field-long" placeholder="Achter" required>
+				<input type="text" name="voorNaam" class="field-long" placeholder="Voor" onfocus="this.placeholder=''" onblur="this.placeholder='voor'" required> 
+				<input type="text" name="achterNaam" class="field-long" placeholder="Achter" onfocus="this.placeholder=''" onblur="this.placeholder='achter'" required>
 			</li>
 			<li>
 				<label>Email</label>
-				<input type="email" name="email" class="field-long" placeholder="voorbeeld@mail.nl" required>
+				<input type="email" name="email" class="field-long" placeholder="voorbeeld@mail.nl" onfocus="this.placeholder=''" onblur="this.placeholder='voorbeeld@mail.nl'" required>
 			</li>
 			<li>
 				<label>Geslacht</label>
@@ -85,7 +93,7 @@
 			</li>
 			<li>
 				<label>Bericht</label>
-				<textarea name="bericht" id="field5" class="field-textarea" required></textarea>
+				<textarea name="bericht" class="field-textarea" required></textarea>
 			</li>
 			<li>
 				<input type="submit" name="verstuur" value="Verstuur">
@@ -97,7 +105,7 @@
 
 	<footer>
         <div>
-            <p>not copyright © 2020 Midas Nies</p>
+			<p>&copy; Copyright 2021 Midas Nies</p>
         </div>
     </footer>
 </body>

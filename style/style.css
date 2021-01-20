@@ -5,6 +5,7 @@
 	--kleur4: #05386B;
 	--kleur5: #2c8170;
 	--kleur6: #8EE4AF;
+	--kleur7: #48ab74;
 }
 
 body {
@@ -15,24 +16,24 @@ body {
 
 h1 {
 	text-align: center;
-	font-size: 48px;
+	font-size: 3rem;
 	font-weight: bold;
 }
 
 h2 {
 	text-align: center;
-	font-size: 32px;
+	font-size: 2rem;
 	font-weight: bold;
 }
 
 h3 {
 	text-align: center;
-	font-size: 24px;
+	font-size: 1.5rem;
 	font-weight: bold;
 }
 
 p {
-	font-size: 24px;
+	font-size: 1.25rem;
 }
 
 hr {
@@ -44,13 +45,13 @@ hr {
 
 footer p {
 	color: var(--kleur3);
-	font-size: 16px;
+	font-size: 1.25rem;
 	text-align: center;
 	margin: 10px;
 }
 
 table {
-	font-size: 20px;
+	font-size: 1.25rem;
 	border-collapse: collapse;
 	margin-left: auto;
 	margin-right: auto;
@@ -64,10 +65,13 @@ td, th {
 }
 
 tr:nth-child(even) {
-	background-color: #48ab74;
+	background-color: var(--kleur7);
 }
 
-button {
+button,
+input[type=submit], 
+input[type=button] {
+	-webkit-appearance: none;
 	color: var(--kleur6);
 	background-color: var(--kleur3);
 	padding: 10px 15px;
@@ -78,10 +82,11 @@ button {
 	font-weight: bold;
 	outline: none;
 	cursor: pointer;
-	text-decoration: none;
 }
 
-button:hover {
+button:hover,
+input[type=submit]:hover, 
+input[type=button]:hover {
 	background: var(--kleur4);
 	letter-spacing: 1px;
 	font-weight: bold;
@@ -95,9 +100,10 @@ img {
 }
 
 .form {
-	margin:10px auto;
+	margin: auto;
 	max-width: 400px;
 	padding: 20px 12px 10px 20px;
+	box-shadow: 5px 5px 18px #000;
 }
 
 .form li {
@@ -108,9 +114,30 @@ img {
 }
 
 .form label{
-	margin:0 0 2px 0;
-	padding:0px;
-	display:block;
+	margin: 0 0 2px 0;
+	padding: 0px;
+	display: block;
+	font-weight: bold;
+}
+
+.wachtwoordGenerator {
+	margin: 10px auto;
+	max-width: 400px;
+	padding: 20px 12px 10px 20px;
+	box-shadow: 5px 5px 18px #000;
+}
+
+.wachtwoordGenerator li {
+	padding: 0;
+	display: block;
+	list-style: none;
+	margin: 10px 0 0 0;
+}
+
+.wachtwoordGenerator label{
+	margin: 0 0 2px 0;
+	padding: 0px;
+	display: block;
 	font-weight: bold;
 }
 
@@ -124,29 +151,16 @@ input[type=url],
 input[type=email],
 textarea, 
 select {
+	-webkit-appearance: none;
 	background-color: var(--kleur3);
 	border-radius: 2px;
-	border: 2px solid var(--kleur4);
+	border: none;
+	border-bottom: 2px solid var(--kleur4);
 	color: var(--kleur6);
 	padding: 7px;
-	margin:5px;
-	outline: none;	
-}
-
-input[type=text]:focus, 
-input[type=date]:focus,
-input[type=datetime]:focus,
-input[type=number]:focus,
-input[type=search]:focus,
-input[type=time]:focus,
-input[type=url]:focus,
-input[type=email]:focus,
-textarea:focus, 
-select:focus {
-	background-color: var(--kleur3);
-	border-radius: 2px;
-	border: 2px solid var(--kleur4);
-	color: var(--kleur6);
+	margin: 5px;
+	margin-left: 0px;
+	outline: none;
 }
 
 .field-long {
@@ -159,32 +173,12 @@ select:focus {
 	width: 90%;
 }
 
-input[type=submit], 
-input[type=button] {
-	background-color: var(--kleur3);
-	padding: 10px 15px;
-	border-radius: 2px;
-	border: 2px solid var(--kleur4);
-	color: var(--kleur6);
-	margin: 5px;
-	font-weight: bold;
-	outline: none;
-	cursor: pointer;
-}
-
-input[type=submit]:hover, 
-input[type=button]:hover {
-	background: var(--kleur4);
-	color: var(--kleur6);
-	letter-spacing: 1px;
-	font-weight: bold;
-}
-
 #title {
-	font-size: 300%;
+	font-size: 3rem;
 	letter-spacing: 10px;
 	background-color: var(--kleur3);
 	color: var(--kleur6);
+	text-shadow: 3px 3px 3px var(--kleur7);
 	padding: 15px;
 	text-align: center;
 	border-radius: 5px;
@@ -212,7 +206,7 @@ input[type=button]:hover {
 	color: #000000;
 	page-break-inside: avoid;
 	font-family: monospace;
-	font-size: 15px;
+	font-size: 1rem;
 	line-height: 1.6;
 	margin-left: auto;
 	margin-right: auto;
@@ -284,6 +278,12 @@ input[type=button]:hover {
 	cursor: pointer; 
 }
 
+#hamburgerButton {
+	font-size: 1.25rem;
+	height: 40px;
+	padding-top: 6px;
+}
+
 #aantalTekensSlider::-moz-range-thumb {
 	width: 12px; 
 	height: 12px; 
@@ -293,38 +293,36 @@ input[type=button]:hover {
 
 #contentDesktop {display: block;}
 #contentMobile {display: none;}
-#hamburgerButton {display: none;}
+
+.gif404 {width: 30%;}
+
+.whatsappVoorbeeldImg {
+	width: 30%;
+	margin: 5px auto;
+}
 
 /* Smalle schermen */
 
 @media screen and (max-width: 768px) {
 
 	#contentDesktop {display: none;}
-	#contentMobile {display: none;}
+	#contentMobile {display: block;}
+	#mobileButtonsContainer {display: none;}
 
-	#hamburgerButton {display: inline;}
+	#contentMobile button { margin: 1px 0px; }
+	
+	table {font-size: 0.6rem;}
+
+	.codeBlock {max-width: 90%;}
+
+	.gif404 {width: 80%;}
 
 	img {width: 80%;}
-	table {font-size: 10px;}
-	.form-style-1 .field-select{width: 84%;}
-
-	#hamburgerButton {
-		background-color: var(--kleur3);
-		transition: 0.4s;
-		padding: 6px 14px 8px 14px;
-		font-size: 18px;
-	}
-
-	#hamburgerButton:hover {
-		background-color: var(--kleur4);
-	}
 
 	#title {
-		font-size: 150%;
+		font-size: 1.5rem;
 		border: 3px solid var(--kleur4);
 		letter-spacing: 2.5px;
 	}
-
-	.codeBlock {max-width: 90%;}
 
 }

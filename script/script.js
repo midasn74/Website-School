@@ -3,7 +3,7 @@ function setIFrame(path) {
 }
 
 function hamburgerMenu() {
-    var hamburgerMenu = document.getElementById('contentMobile');
+    var hamburgerMenu = document.getElementById('mobileButtonsContainer');
     if (hamburgerMenu.style.display == "block") {
         hamburgerMenu.style.display = "none";
     } else {
@@ -17,7 +17,7 @@ function playSound(url) {
 }
 
 function iframeRedirect(pagina) {
-    if (pagina == '0') {
+    if (pagina == '1') {
         window.location.href = 'http://informatica.lvo-weert.nl/~midas.n/'
     } else {
         window.location.href = 'http://informatica.lvo-weert.nl/~midas.n/?pagina=' + pagina;

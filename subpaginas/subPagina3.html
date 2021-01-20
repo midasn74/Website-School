@@ -2,7 +2,7 @@
 <html lang="nl">
 
 <head>
-	<title>Wachtwoord</title>
+	<title>Features</title>
 	<meta charset="UTF-8">
 	<link rel="icon" type="image/x-icon" href="/~midas.n/fotos/standaardIcon.ico">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -99,23 +99,21 @@ function maakWachtwoord() {
 	</p>
 
 	<pre class="codeBlock">
-if ( isset($_GET['pagina'])) {
-	if ($_GET['pagina'] == '1') {
-		echo "&lt;script&gt;setIFrame(path='subpaginas/subPagina2.html')&lt;/script&gt;";
+&lt;?php
+	if (isset($_GET[&#39;pagina&#39;])) {
+		if ($_GET[&#39;pagina&#39;] == &#39;2&#39;) {
+			echo &quot;&lt;script&gt;setIFrame(path=&#39;subpaginas/subPagina2.html&#39;)&lt;/script&gt;&quot;;
+		}
+		if ($_GET[&#39;pagina&#39;] == &#39;3&#39;) {
+			echo &quot;&lt;script&gt;setIFrame(path=&#39;subpaginas/subPagina3.html&#39;)&lt;/script&gt;&quot;;
+		}
+		if ($_GET[&#39;pagina&#39;] == &#39;4&#39;) {
+			echo &quot;&lt;script&gt;setIFrame(path=&#39;subpaginas/subPagina4.php&#39;)&lt;/script&gt;&quot;;
+		}
+	} else {
+		echo &quot;&lt;script&gt;setIFrame(path=&#39;subpaginas/subPagina1.html&#39;)&lt;/script&gt;&quot;;
 	}
-	if ($_GET['pagina'] == '2') {
-		echo "&lt;script&gt;setIFrame(path='subpaginas/subPagina3.html')&lt;/script&gt;";
-	}
-	if ($_GET['pagina'] == '3') {
-		echo "&lt;script&gt;setIFrame(path='subpaginas/subPagina4.html')&lt;/script&gt;";
-	} 
-	else {
-		echo "&lt;script&gt;setIFrame(path='subpaginas/subPagina1.html')&lt;/script&gt;";
-	}
-} 
-else {
-	echo "&lt;script&gt;setIFrame(path='subpaginas/subPagina1.html')&lt;/script&gt;";
-}
+?&gt;
 </pre>
 	<pre class="codeBlock">
 function setIFrame(path) {
@@ -152,58 +150,100 @@ function iframeHeight(obj) {
 
 	<img src="../fotos/icons.png" alt="Standaard Icoon" style="width: 100px;">
 
+	<h1>Site preview</h1>
+
+	<p>Ik heb er voor gezorgd tot wanneer je de link van de site deelt dat er op verschillende chat platformen een
+		preview van de site ontstaat. Hieronder zie je hoe dit gedaan is en een voorbeeld op whatsapp. Ook wanneer je
+		een een andere subpagina deelt met iemand maakt hij gebruik van php om de juiste beschrijving van de website
+		weer te geven.</p>
+
+	<pre class="codeBlock">
+&lt;meta property=&quot;og:type&quot; content=&quot;website&quot;&gt;
+&lt;meta property=&quot;og:title&quot; content=&quot;Midas&quot; /&gt;
+&lt;meta property=&quot;og:url&quot; content=&quot;http://informatica.lvo-weert.nl/~midas.n/&quot; /&gt;
+&lt;meta property=&quot;og:image&quot; content=&quot;/fotos/tumbnail.png&quot; /&gt;
+&lt;meta name=&quot;theme-color&quot; content=&quot;#5CDB95&quot;&gt;
+&lt;?php
+	if (isset($_GET[&#39;pagina&#39;])) {
+		if ($_GET[&#39;pagina&#39;] == &#39;2&#39;) {
+			echo &quot;&lt;meta property=&#39;og:description&#39; content=&#39;Wesbite school, Midas Nies H4F. Wachtwoord generator&#39; /&gt;&quot;;
+		}
+		if ($_GET[&#39;pagina&#39;] == &#39;3&#39;) {
+			echo &quot;&lt;meta property=&#39;og:description&#39; content=&#39;Wesbite school, Midas Nies H4F. Features &#39; /&gt;&quot;;
+		}
+		if ($_GET[&#39;pagina&#39;] == &#39;4&#39;) {
+			echo &quot;&lt;meta property=&#39;og:description&#39; content=&#39;Wesbite school, Midas Nies H4F. Contact formulier&#39; /&gt;&quot;;
+		}
+	} else {
+		echo &quot;&lt;meta property=&#39;og:description&#39; content=&#39;Wesbite school, Midas Nies H4F.&#39; /&gt;&quot;;
+	}
+?&gt;
+</pre>
+
+	<img src="../fotos/voorbeeldWhatsapp.gif" alt="Voorbeeld whatsapp" class="whatsappVoorbeeldImg">
+
 	<h1>Contact formulier</h1>
 
 	<p>Ik een contact formulier gemaakt zoals er staat in de eisen via php. Wanneer iemand reageert op dit formulier
 		krijg ik een mooie html mail die er als volgt uitziet. Hieronder kun je ook de php code zien die de mail
-		verzendt.</p>
+		verzendt. Ook heb ik er voor gezorgd tot je het formulier maar een keer per 12 uur in kan vullen, dit heb ik
+		gedaan door gebruikt te maken van cookies. Je kunt helaas wel je cookies wissen en hem blijven inleveren maar
+		dit is de beste oplossing om spam tegen te gaan wanneer je geen gebruik kunt maken van een database.</p>
 
 	<pre class="codeBlock">
-&#x3C;?php 
+&#x3C;?php
 &#x9;if (isset($_POST[&#x27;verstuur&#x27;])) {
-&#x9;&#x9;$ontvanger = &#x22;PV143938@leerling.pvanhorne.nl&#x22;;
+&#x9;&#x9;$cookie_name = &#x22;formulierIngevuld&#x22;;
+&#x9;&#x9;if(!isset($_COOKIE[$cookie_name])) {
+&#x9;&#x9;&#x9;$ontvanger = &#x22;PV143938@leerling.pvanhorne.nl&#x22;;
 
-&#x9;&#x9;$voorNaam = $_POST[&#x27;voorNaam&#x27;];
+&#x9;&#x9;&#x9;$voorNaam = $_POST[&#x27;voorNaam&#x27;];
+&#x9;
+&#x9;&#x9;&#x9;$achterNaam = $_POST[&#x27;achterNaam&#x27;];
+&#x9;
+&#x9;&#x9;&#x9;$geslacht = $_POST[&#x27;geslacht&#x27;];
+&#x9;
+&#x9;&#x9;&#x9;$onderwerp = &#x22;Reactie formulier informatica site&#x22;;
+&#x9;
+&#x9;&#x9;&#x9;$headers  = &#x27;MIME-Version: 1.0&#x27; . &#x22;\r\n&#x22;;
+&#x9;&#x9;&#x9;$headers .= &#x27;Content-type: text/html; charset=iso-8859-1&#x27; . &#x22;\r\n&#x22;;
+&#x9;
+&#x9;&#x9;&#x9;$email = $_POST[&#x27;email&#x27;];
 
-&#x9;&#x9;$achterNaam = $_POST[&#x27;achterNaam&#x27;];
+&#x9;&#x9;&#x9;$bericht = wordwrap($_POST[&#x27;bericht&#x27;],70);
 
-&#x9;&#x9;$geslacht = $_POST[&#x27;geslacht&#x27;];
+&#x9;&#x9;&#x9;$message = &#x27;&#x3C;html&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;head&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;style&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;hr {&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;border: 3px solid #05386B;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;border-radius: 2px;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;margin: 5px 0px;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;background-color: #05386B;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;}&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;/style&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;/head&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;body&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;h1&#x3E;Reactie informatica site&#x3C;/h1&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;hr&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;p&#x3E;&#x3C;b&#x3E;Naam: &#x3C;/b&#x3E;&#x27; . $voorNaam . &#x27; &#x27; . $achterNaam . &#x27;&#x3C;/p&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;p&#x3E;&#x3C;b&#x3E;Geslacht: &#x3C;/b&#x3E;&#x27; . $geslacht . &#x27;&#x3C;/p&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x22;&#x3C;p&#x3E;&#x3C;b&#x3E;Email: &#x3C;/b&#x3E; &#x3C;a href=&#x27;mailto:&#x22; . $email . &#x22;&#x27;&#x3E;&#x22; . $email . &#x22;&#x3C;/a&#x3E;&#x3C;/p&#x3E;&#x22;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;hr&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;p&#x3E;&#x3C;b&#x3E;Bericht:&#x3C;/b&#x3E;&#x3C;/p&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;p&#x3E;&#x27; . $bericht . &#x27;&#x3C;/p&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;/body&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;/html&#x3E;&#x27;;
+&#x9;
+&#x9;&#x9;&#x9;mail($ontvanger,$onderwerp,$message,$headers);
 
-&#x9;&#x9;$onderwerp = &#x22;Reactie formulier informatica site&#x22;;
-
-&#x9;&#x9;$headers  = &#x27;MIME-Version: 1.0&#x27; . &#x22;\r\n&#x22;;
-&#x9;&#x9;$headers .= &#x27;Content-type: text/html; charset=iso-8859-1&#x27; . &#x22;\r\n&#x22;;
-
-&#x9;&#x9;$email = $_POST[&#x27;email&#x27;];
-
-&#x9;&#x9;$bericht = wordwrap($_POST[&#x27;bericht&#x27;],70);
-
-&#x9;&#x9;$message = &#x27;&#x3C;html&#x3E;&#x27;;
-&#x9;&#x9;$message .= &#x27;&#x3C;head&#x3E;&#x27;;
-&#x9;&#x9;$message .= &#x27;&#x3C;style&#x3E;&#x27;;
-&#x9;&#x9;$message .= &#x27;hr {&#x27;;
-&#x9;&#x9;$message .= &#x27;border: 3px solid #05386B;&#x27;;
-&#x9;&#x9;$message .= &#x27;border-radius: 2px;&#x27;;
-&#x9;&#x9;$message .= &#x27;margin: 5px 0px;&#x27;;
-&#x9;&#x9;$message .= &#x27;background-color: #05386B;&#x27;;
-&#x9;&#x9;$message .= &#x27;}&#x27;;
-&#x9;&#x9;$message .= &#x27;&#x3C;/style&#x3E;&#x27;;
-&#x9;&#x9;$message .= &#x27;&#x3C;/head&#x3E;&#x27;;
-&#x9;&#x9;$message .= &#x27;&#x3C;body&#x3E;&#x27;;
-&#x9;&#x9;$message .= &#x27;&#x3C;h1&#x3E;Reactie informatica site&#x3C;/h1&#x3E;&#x27;;
-&#x9;&#x9;$message .= &#x27;&#x3C;hr&#x3E;&#x27;;
-&#x9;&#x9;$message .= &#x27;&#x3C;p&#x3E;&#x3C;b&#x3E;Naam: &#x3C;/b&#x3E;&#x27; . $voorNaam . &#x27; &#x27; . $achterNaam . &#x27;&#x3C;/p&#x3E;&#x27;;
-&#x9;&#x9;$message .= &#x27;&#x3C;p&#x3E;&#x3C;b&#x3E;Geslacht: &#x3C;/b&#x3E;&#x27; . $geslacht . &#x27;&#x3C;/p&#x3E;&#x27;;
-&#x9;&#x9;$message .= &#x22;&#x3C;p&#x3E;&#x3C;b&#x3E;Email: &#x3C;/b&#x3E; &#x3C;a href=&#x27;mailto:&#x22; . $email . &#x22;&#x27;&#x3E;&#x22; . $email . &#x22;&#x3C;/a&#x3E;&#x3C;/p&#x3E;&#x22;;
-&#x9;&#x9;$message .= &#x27;&#x3C;hr&#x3E;&#x27;;
-&#x9;&#x9;$message .= &#x27;&#x3C;p&#x3E;&#x3C;b&#x3E;Bericht:&#x3C;/b&#x3E;&#x3C;/p&#x3E;&#x27;;
-&#x9;&#x9;$message .= &#x27;&#x3C;p&#x3E;&#x27; . $bericht . &#x27;&#x3C;/p&#x3E;&#x27;;
-&#x9;&#x9;$message .= &#x27;&#x3C;/body&#x3E;&#x27;;
-&#x9;&#x9;$message .= &#x27;&#x3C;/html&#x3E;&#x27;;
-
-&#x9;&#x9;mail($ontvanger,$onderwerp,$message,$headers);
-
-&#x9;&#x9;echo &#x27;&#x3C;script&#x3E;alert(&#x22;Verzonden!&#x22;)&#x3C;/script&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$cookie_value = &#x22;1&#x22;;
+&#x9;&#x9;&#x9;setcookie($cookie_name, $cookie_value, time() + (43200 * 30), &#x22;/&#x22;);
+&#x9;
+&#x9;&#x9;&#x9;echo &#x27;&#x3C;script&#x3E;alert(&#x22;Verzonden!&#x22;)&#x3C;/script&#x3E;&#x27;;
+&#x9;&#x9;} else {
+&#x9;&#x9;&#x9;echo &#x27;&#x3C;script&#x3E;alert(&#x22;U kunt het formulier maar een keer per twaalf uur inleveren.&#x22;)&#x3C;/script&#x3E;&#x27;;
+&#x9;&#x9;}
 &#x9;}
 ?&#x3E;
 </pre>
@@ -214,7 +254,7 @@ function iframeHeight(obj) {
 
 	<footer>
 		<div>
-			<p>not copyright © 2020 Midas Nies</p>
+			<p>&copy; Copyright 2021 Midas Nies</p>
 		</div>
 	</footer>
 
