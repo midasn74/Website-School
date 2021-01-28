@@ -6,8 +6,10 @@ function hamburgerMenu() {
     var hamburgerMenu = document.getElementById('mobileButtonsContainer');
     if (hamburgerMenu.style.display == "block") {
         hamburgerMenu.style.display = "none";
+        document.getElementById("hamburgerButton").innerHTML = "≡";
     } else {
         hamburgerMenu.style.display = "block";
+        document.getElementById("hamburgerButton").innerHTML = "✖";
     }
 }
 

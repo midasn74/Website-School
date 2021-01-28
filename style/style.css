@@ -296,11 +296,6 @@ select {
 
 .gif404 {width: 30%;}
 
-.whatsappVoorbeeldImg {
-	width: 30%;
-	margin: 5px auto;
-}
-
 /* Smalle schermen */
 
 @media screen and (max-width: 768px) {

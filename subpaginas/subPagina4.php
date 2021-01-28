@@ -45,11 +45,11 @@
 			mail($ontvanger,$onderwerp,$message,$headers);
 
 			$cookie_value = "1";
-			setcookie($cookie_name, $cookie_value, time() + (43200 * 30), "/");
+			setcookie($cookie_name, $cookie_value, time()+3600, "/");
 	
 			echo '<script>alert("Verzonden!")</script>';
 		} else {
-			echo '<script>alert("U kunt het formulier maar een keer per twaalf uur inleveren.")</script>';
+			echo '<script>alert("U kunt het formulier maar een keer per uur inleveren.")</script>';
 		}
 	}
 ?>
@@ -67,9 +67,7 @@
 </head>
 
 <body>
-	<h1>Formulier</h1>
-
-	<p>Laat hier achter wat u over de website denkt en wat er mogelijk aan verbeterd kan worden. Of stuur een <a href="mailto:pv143938@leerling.pvanhorne.nl?subject=Response Website">mail</a>.</p>
+	<h1>Contact</h1>
 
 	<form action="" method="POST">
 		<ul class="form">
@@ -100,6 +98,8 @@
 			</li>
 		</ul>
 	</form>
+
+	<p style="text-align: center;">Of stuur een <a href="mailto:pv143938@leerling.pvanhorne.nl?subject=Respons website">mail</a>.</p>
 
 	<hr>
 
