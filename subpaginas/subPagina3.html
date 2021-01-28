@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+	<title>Features</title>
+	<meta charset="UTF-8">
+	<link rel="icon" type="image/x-icon" href="/~midas.n/fotos/standaardIcon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../style/style.css">
+	<script src="../script/script.js"></script>
+</head>
+
+<body>
+	<h1>Features</h1>
+
+	<p>Voor de docent die mijn site gaat nakijken lees deze pagina goed door alstublieft. Alle javascript en php is door
+		mij zelf geschreven en niks is gekopieerd, ik heb alleen soms gebruik gemaakt van w3schools of stackoverflow.
+	</p>
+
+	<h2>Wachtwoord generator</h2>
+
+	<p>In deze site zit een wachtwoord generator, hierbij kan je kiezen hoe lang het wachtwoord moet worden en kun je
+		aanvinken welke tekens/symbolen in je wachtwoord wilt. Het genereert het wachtwoord met een door mij geschreven
+		javascript code, hieronder zie je de code. Deze hele javascript code van de wachtwoord generator is door mij
+		geschreven en bedacht en er is niks gejat.</p>
+
+	<pre class='codeBlock'>
+/* Dit maakt een aantal variabelen aan die later gebruikt kunnen worden. */
+var slider = document.getElementById("aantalTekensSlider");
+var aantalTekens = document.getElementById("aantalTekens");
+var wachtwoordOut = document.getElementById("wachtwoord");
+aantalTekens.innerHTML = slider.value;
+
+/* Dit zorgt ervoor dat de waarde van de slider afgedrukt wordt op het scherm */
+aantalTekensSlider.oninput = function() {
+	aantalTekens.innerHTML = this.value;
+}
+
+/* Dit zorgt ervoor dat het wachtwoord gekopieerd word. */
+function kopieerWachtwoord() {
+	var copyText = document.getElementById("wachtwoord");
+	copyText.select();
+	copyText.setSelectionRange(0, 16)
+	document.execCommand("copy");
+	alert('Wachtwoord gekopieerd');
+}
+
+/* Dit genereert het wachtwoord. */
+function maakWachtwoord() {
+	var tekens = ''
+	if (document.getElementById("kleineLettersCheck").checked == true) {
+		var kleineLetters = 'qwertyuiopasdfghjklzxcvbnm';
+		tekens = tekens.concat(kleineLetters);
+	}
+	if (document.getElementById("groteLettersCheck").checked == true) {
+		var groteLetters = 'QWERTYUIOPASDFGHJKLZXCVBNM';
+		tekens = tekens.concat(groteLetters);
+	}
+	if (document.getElementById("cijfersCheck").checked == true) {
+		var cijfers = '1234567890';
+		tekens = tekens.concat(cijfers);
+	}
+	if (document.getElementById("symbolenCheck").checked == true) {
+		var symbolen = '!@#$%^&amp;*';
+		tekens = tekens.concat(symbolen);
+	}
+	var wachtwoord = '';
+	var tekensLengte = tekens.length;
+	for ( var i = 0; i &lt; slider.value; i++ ) {
+		wachtwoord += tekens.charAt(Math.floor(Math.random() * tekensLengte));
+	}
+	wachtwoordOut.value = wachtwoord;
+}
+</pre>
+
+	<h1>404 Pagina</h1>
+
+	<p>Ik heb via het .htacces bestand een 404 pagina gemaakt, wanneer iemand dus een ongeldige url invult binnen mijn
+		site word je doorverwezen naar de 404 pagina. ga bijvoorbeeld naar deze url
+		<a href="http://informatica.lvo-weert.nl/~midas.n/ditbestaatniet"
+			target="Blank">http://informatica.lvo-weert.nl/~midas.n/ditbestaatniet</a>
+		deze url binnen mijn site bestaat niet en je wordt dus doorverwezen. Om dit te laten werken in je site moet een
+		bestand maken in hetzelfde mapje als je index, dit bestand moet precies '.htacces' heten. In dit bestand zet je
+		onderstaande code maar vervang je de url met jou 404 url. Dan moet je wel nog een bestand maken die '404.html'
+		heet.
+	</p>
+
+	<pre class='codeBlock'>ErrorDocument 404 http://informatica.lvo-weert.nl/~midas.n/404</pre>
+
+	<h1>Url variabelen</h1>
+
+	<p>Ik heb er voor gezorgd dat de site wanneer je hem opstart naar een variabel in de url zoekt, het variabel
+		heet pagina. Wanneer het variabel niet ingesteld is ga je naar de home pagina, wanneer hij wel bestaat heeft hij
+		een waarde van 1, 2, of 3 en dit verteld de site dus welke pagina het is. Dit zorgt er dus voor dat je de site
+		met iemand kunt delen en dan laadt hij gelijk de correcte subpagina in. Wat onderstaande code dus doet is;
+		wanneer de site geladen word kijkt hij of het variabel 'pagina' in de url zit, zo ja kijk hij welke waarde het
+		heeft, wanneer het dan bijvoorbeeld de waarde 2 heeft voert hij een javascript functie uit die de iframe
+		aanpast.
+	</p>
+
+	<pre class="codeBlock">
+&lt;?php
+	if (isset($_GET[&#39;pagina&#39;])) {
+		if ($_GET[&#39;pagina&#39;] == &#39;2&#39;) {
+			echo &quot;&lt;script&gt;setIFrame(path=&#39;subpaginas/subPagina2.html&#39;)&lt;/script&gt;&quot;;
+		}
+		if ($_GET[&#39;pagina&#39;] == &#39;3&#39;) {
+			echo &quot;&lt;script&gt;setIFrame(path=&#39;subpaginas/subPagina3.html&#39;)&lt;/script&gt;&quot;;
+		}
+		if ($_GET[&#39;pagina&#39;] == &#39;4&#39;) {
+			echo &quot;&lt;script&gt;setIFrame(path=&#39;subpaginas/subPagina4.php&#39;)&lt;/script&gt;&quot;;
+		}
+	} else {
+		echo &quot;&lt;script&gt;setIFrame(path=&#39;subpaginas/subPagina1.html&#39;)&lt;/script&gt;&quot;;
+	}
+?&gt;
+</pre>
+	<pre class="codeBlock">
+function setIFrame(path) {
+	document.getElementById('iframeSubPages').src = path;
+}
+</pre>
+
+	<h1>Automatische iframe hoogte</h1>
+
+	<p>Wanneer de iframe een andere pagina inlaad kijkt hij naar de scroll hoogte van dat bestand en maakt de iframe
+		even
+		hoog zodat je niet en in de iframe hoeft de scrollen en op de echte site, dan heb je 2 scrollbars en is het niet
+		heel fijn om doorheen te scrollen. Deze feature zorgt er voor dat de site veel smoother voelt om er door heen te
+		gaan. Elke keer wanneer de iframe geladen wordt wordt onderstaande functie uitgevoerd.
+	</p>
+
+	<pre class="codeBlock">
+function iframeHeight(obj) {
+	obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+}
+</pre>
+
+	<h1>Icoon website</h1>
+
+	<p>Ik heb een icoon toegevoegd aan de website dus je zit bovenaan bij je tabjes een mooi icoontje. Wanneer je in de
+		404 pagina terecht komt is dit icoontje veranderd naar een vraagteken.</p>
+
+	<pre class="codeBlock">
+&lt;!-- dit zorgt er voor dat het icoontje geladen word --&gt;
+&lt;link rel="icon" type="image/x-icon" href="/~midas.n/fotos/standaardIcon.ico"&gt;
+&lt;!-- Of dit wanneer het de 404 pagina is --&gt;
+&lt;link rel="icon" type="image/x-icon" href="/~midas.n/fotos/404Icon.ico"&gt;
+</pre>
+
+	<img src="../fotos/icons.png" alt="Standaard Icoon" style="width: 100px;">
+
+	<h1>Site preview</h1>
+
+	<p>Ik heb er voor gezorgd tot wanneer je de link van de site deelt dat er op verschillende chat platformen een
+		preview van de site ontstaat. Hieronder zie je hoe dit gedaan is en een voorbeeld op whatsapp. Ook wanneer je
+		een een andere subpagina deelt met iemand maakt hij gebruik van php om de juiste beschrijving van de website
+		weer te geven.</p>
+
+	<pre class="codeBlock">
+&lt;meta property=&quot;og:type&quot; content=&quot;website&quot;&gt;
+&lt;meta property=&quot;og:title&quot; content=&quot;Midas&quot; /&gt;
+&lt;meta property=&quot;og:url&quot; content=&quot;http://informatica.lvo-weert.nl/~midas.n/&quot; /&gt;
+&lt;meta property=&quot;og:image&quot; content=&quot;/fotos/tumbnail.png&quot; /&gt;
+&lt;meta name=&quot;theme-color&quot; content=&quot;#5CDB95&quot;&gt;
+&lt;?php
+	if (isset($_GET[&#39;pagina&#39;])) {
+		if ($_GET[&#39;pagina&#39;] == &#39;2&#39;) {
+			echo &quot;&lt;meta property=&#39;og:description&#39; content=&#39;Wesbite school, Midas Nies H4F. Wachtwoord generator&#39; /&gt;&quot;;
+		}
+		if ($_GET[&#39;pagina&#39;] == &#39;3&#39;) {
+			echo &quot;&lt;meta property=&#39;og:description&#39; content=&#39;Wesbite school, Midas Nies H4F. Features &#39; /&gt;&quot;;
+		}
+		if ($_GET[&#39;pagina&#39;] == &#39;4&#39;) {
+			echo &quot;&lt;meta property=&#39;og:description&#39; content=&#39;Wesbite school, Midas Nies H4F. Contact formulier&#39; /&gt;&quot;;
+		}
+	} else {
+		echo &quot;&lt;meta property=&#39;og:description&#39; content=&#39;Wesbite school, Midas Nies H4F.&#39; /&gt;&quot;;
+	}
+?&gt;
+</pre>
+
+	<img src="../fotos/voorbeeldWhatsapp.gif" alt="Voorbeeld whatsapp" class="whatsappVoorbeeldImg">
+
+	<h1>Contact formulier</h1>
+
+	<p>Ik een contact formulier gemaakt zoals er staat in de eisen via php. Wanneer iemand reageert op dit formulier
+		krijg ik een mooie html mail die er als volgt uitziet. Hieronder kun je ook de php code zien die de mail
+		verzendt. Ook heb ik er voor gezorgd tot je het formulier maar een keer per 12 uur in kan vullen, dit heb ik
+		gedaan door gebruikt te maken van cookies. Je kunt helaas wel je cookies wissen en hem blijven inleveren maar
+		dit is de beste oplossing om spam tegen te gaan wanneer je geen gebruik kunt maken van een database.</p>
+
+	<pre class="codeBlock">
+&#x3C;?php
+&#x9;if (isset($_POST[&#x27;verstuur&#x27;])) {
+&#x9;&#x9;$cookie_name = &#x22;formulierIngevuld&#x22;;
+&#x9;&#x9;if(!isset($_COOKIE[$cookie_name])) {
+&#x9;&#x9;&#x9;$ontvanger = &#x22;PV143938@leerling.pvanhorne.nl&#x22;;
+
+&#x9;&#x9;&#x9;$voorNaam = $_POST[&#x27;voorNaam&#x27;];
+&#x9;
+&#x9;&#x9;&#x9;$achterNaam = $_POST[&#x27;achterNaam&#x27;];
+&#x9;
+&#x9;&#x9;&#x9;$geslacht = $_POST[&#x27;geslacht&#x27;];
+&#x9;
+&#x9;&#x9;&#x9;$onderwerp = &#x22;Reactie formulier informatica site&#x22;;
+&#x9;
+&#x9;&#x9;&#x9;$headers  = &#x27;MIME-Version: 1.0&#x27; . &#x22;\r\n&#x22;;
+&#x9;&#x9;&#x9;$headers .= &#x27;Content-type: text/html; charset=iso-8859-1&#x27; . &#x22;\r\n&#x22;;
+&#x9;
+&#x9;&#x9;&#x9;$email = $_POST[&#x27;email&#x27;];
+
+&#x9;&#x9;&#x9;$bericht = wordwrap($_POST[&#x27;bericht&#x27;],70);
+
+&#x9;&#x9;&#x9;$message = &#x27;&#x3C;html&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;head&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;style&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;hr {&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;border: 3px solid #05386B;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;border-radius: 2px;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;margin: 5px 0px;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;background-color: #05386B;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;}&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;/style&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;/head&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;body&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;h1&#x3E;Reactie informatica site&#x3C;/h1&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;hr&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;p&#x3E;&#x3C;b&#x3E;Naam: &#x3C;/b&#x3E;&#x27; . $voorNaam . &#x27; &#x27; . $achterNaam . &#x27;&#x3C;/p&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;p&#x3E;&#x3C;b&#x3E;Geslacht: &#x3C;/b&#x3E;&#x27; . $geslacht . &#x27;&#x3C;/p&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x22;&#x3C;p&#x3E;&#x3C;b&#x3E;Email: &#x3C;/b&#x3E; &#x3C;a href=&#x27;mailto:&#x22; . $email . &#x22;&#x27;&#x3E;&#x22; . $email . &#x22;&#x3C;/a&#x3E;&#x3C;/p&#x3E;&#x22;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;hr&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;p&#x3E;&#x3C;b&#x3E;Bericht:&#x3C;/b&#x3E;&#x3C;/p&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;p&#x3E;&#x27; . $bericht . &#x27;&#x3C;/p&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;/body&#x3E;&#x27;;
+&#x9;&#x9;&#x9;$message .= &#x27;&#x3C;/html&#x3E;&#x27;;
+&#x9;
+&#x9;&#x9;&#x9;mail($ontvanger,$onderwerp,$message,$headers);
+
+&#x9;&#x9;&#x9;$cookie_value = &#x22;1&#x22;;
+&#x9;&#x9;&#x9;setcookie($cookie_name, $cookie_value, time()+3600, &#x22;/&#x22;);
+&#x9;
+&#x9;&#x9;&#x9;echo &#x27;&#x3C;script&#x3E;alert(&#x22;Verzonden!&#x22;)&#x3C;/script&#x3E;&#x27;;
+&#x9;&#x9;} else {
+&#x9;&#x9;&#x9;echo &#x27;&#x3C;script&#x3E;alert(&#x22;U kunt het formulier maar een keer per uur inleveren.&#x22;)&#x3C;/script&#x3E;&#x27;;
+&#x9;&#x9;}
+&#x9;}
+?&#x3E;
+</pre>
+
+	<img src="../fotos/emailVoorbeeld.PNG" alt="Voorbeeld email">
+
+	<hr>
+
+	<footer>
+		<div>
+			<p>&copy; Copyright 2021 Midas Nies</p>
+		</div>
+	</footer>
+
+</body>
+
+</html>
